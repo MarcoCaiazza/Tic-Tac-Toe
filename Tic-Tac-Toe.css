@@ -1,0 +1,21 @@
+.containerTitle {
+    display: flex;
+    justify-content: center;
+}
+.containerGrid {
+    display: flex;
+    justify-content: center;
+}
+.grid {
+    display: grid;
+    grid-gap: 10px;
+    grid-template-columns: repeat(3,150px);
+    grid-template-rows: repeat(3,150px)
+}
+.grid > div {
+    display: grid;
+    background-color: rgb(144, 111, 55);
+    border-radius: 5px;
+    padding: 10px;
+    place-items: center;
+}
