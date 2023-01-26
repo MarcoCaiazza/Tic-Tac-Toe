@@ -1,9 +1,9 @@
 const game = (() => {
   const gameBoard = () => {
     let board = [
+      ["X", "", ""],
       ["", "", ""],
-      ["", "", ""],
-      ["", "", ""],
+      ["", "", "O"],
     ];
     return board;
   };
@@ -11,17 +11,20 @@ const game = (() => {
     const getName = () => name;
     const getIcon = () => icon;
   };
-  const displayController = () => {
-    let board = gameBoard();
-    for (let i = 0; i < board.length; i++) {
-      document.getElementsByClassName("cell-grid").innerHTML = board[i];
-      console.log(
-        (document.getElementsByClassName("cell-grid").innerHTML = board[i])
-      );
-    }
-  };
+  const displayController = () => {};
 
-  return { gameBoard, Player, displayController, displayController };
+  const gameBoardArray = () => {
+    let board = gameBoard();
+    let cellElements = document.querySelectorAll(".cell-grid");
+    let i = 0;
+    board.forEach((row) => {
+      row.forEach((cell) => {
+        cellElements[i].innerHTML = cell;
+        i++;
+      });
+    });
+  };
+  return { gameBoard, Player, displayController, gameBoardArray };
 })();
 
-game.displayController();
+game.gameBoardArray();
