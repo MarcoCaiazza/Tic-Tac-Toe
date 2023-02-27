@@ -3,7 +3,7 @@ const game = (() => {
   // Funzione che rappresenta la nostra griglia da gioco
   const gameBoard = () => {
     let board = [
-      ["X", "O", ""],
+      ["", "", ""],
       ["", "", ""],
       ["", "", ""],
     ];
@@ -21,31 +21,50 @@ const game = (() => {
 
   const displayController = () => {
     let cellGrid = document.querySelectorAll(".cell-grid");
-    let i = 0;
+    // let i = 0;
 
     // Funzione che renderà il contenuto dell'array
     //  del tabellone di gioco sulla pagina web
 
     const gameBoardArray = () => {
       let board = gameBoard();
-      i = 0;
+      // i = 0;
       board.forEach((row) => {
         row.forEach((cell) => {
-          cellGrid[i].innerHTML = cell;
-          i++;
+          cellGrid.innerHTML = cell;
+          // i++;
         });
       });
     };
 
     // Funzione che consente di aggiungere il segno ad una cella
-    const getSign = (player) => {
+    const getSign = () => {
+      let currentPlayer = players[0];
+
       cellGrid.forEach((cell) => {
         cell.addEventListener(
           "click",
-          () => (cell.innerHTML = player.getIcon())
+          (getSignPlayerOneOrTwo = () => {
+            if (cell.innerHTML === "") {
+              cell.innerHTML = currentPlayer.getIcon();
+              console.log(
+                `${currentPlayer.getPlayer()} scored ${currentPlayer.getIcon()}`
+              );
+              // Funzione che alterna il segno "X" e il segno "O"
+              const switchPlayers = () => {
+                if (currentPlayer === players[0]) {
+                  currentPlayer = players[1];
+                } else {
+                  return (currentPlayer = players[0]);
+                }
+              };
+              switchPlayers();
+            }
+          })
         );
       });
     };
+
     return { gameBoardArray, getSign };
   };
 
@@ -54,10 +73,14 @@ const game = (() => {
 
 // Creiamo un array di oggetti giocatore
 
-const player1 = game.Players("Player 1", "X");
-const player2 = game.Players("Player 2", "O");
+const player1 = game.Players("MARCO", "X");
+const player2 = game.Players("DENISE", "O");
 const players = [player1, player2];
 
 // utilizziamo la funzione displayController per renderizzare il tabellone di gioco
 const controller = game.displayController();
 controller.gameBoardArray();
+
+players.forEach((player) => {
+  controller.getSign(player);
+});
