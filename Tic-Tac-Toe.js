@@ -18,10 +18,10 @@ const game = (() => {
   // Funzione che controlla il flusso di gioco
 
   const displayController = () => {
-    let cellGrid = document.querySelectorAll(".cell-grid");
-
     // Funzione che renderà il contenuto dell'array
     //  del tabellone di gioco sulla pagina web
+
+    let cellGrid = document.querySelectorAll(".cell-grid");
 
     const renderBoardArray = () => {
       board.forEach((row) => {
@@ -40,20 +40,21 @@ const game = (() => {
       }
     };
     // funzione che imposta uno dei due segni
-    setSign = (cell, currentPlayer) => {
+    const setSign = (e, cell, currentPlayer) => {
       if (cell.innerHTML === "") {
-        cell.innerHTML = currentPlayer.getIcon();
-        console.log(
-          `${currentPlayer.getPlayer()} scored ${currentPlayer.getIcon()}`
-        );
+        let [row, col] = cell.id.split("-"); //id del pusante cliccato viene splittato
+        let strToNum = [row, col].map((str) => parseInt(str)); // ora i valori da stringhe passano a numeri
+        board[row][col] = currentPlayer.getIcon(); // assegno alla posizione nell'array il segno corrente
+        cell.innerHTML = currentPlayer.getIcon(); // assegno all'html il segno corrente
+        console.log(board);
         changePlayers(currentPlayer);
       }
     };
-    // Funzione che consente di aggiungere il clik ad ogni cella
+    // Funzione che aggiunge il clik ad ogni cella
     const addClickEventToTableCells = () => {
       let currentPlayer = players[0];
       cellGrid.forEach((cell) => {
-        cell.addEventListener("click", (e) => setSign(cell, currentPlayer));
+        cell.addEventListener("click", (e) => setSign(e, cell, currentPlayer));
       });
     };
 
@@ -73,7 +74,7 @@ const players = [player1, player2];
 const controller = game.displayController();
 controller.renderBoardArray();
 
-// per ogni giocatore assegniamo il proprio segno di gioco
+// ad ogni giocatore aggiungiamo il clik per il segno
 players.forEach((player) => {
   controller.addClickEventToTableCells(player);
 });
