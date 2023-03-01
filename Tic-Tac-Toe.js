@@ -33,7 +33,7 @@ const game = (() => {
       });
     };
 
-    // Funzione che alterna il segno "X" e il segno "O"
+    // Funzione che alterna il segno  e il segno "O"
     const changePlayers = () => {
       if (!previousPlayer && currentPlayer === players[0]) {
         currentPlayer = players[1];
@@ -42,13 +42,49 @@ const game = (() => {
       }
     };
     // funzione che imposta uno dei due segni
+
+    // funzione vincita o pareggio
+    // if la board ha 3 celle in fila
+    //  orrizzontale o diagonale con lo stesso simbolo,vince il simbolo
+    const playerWin = () => {
+      // console.log(board.length);
+      // for (let i = 0; i < board.length; i++) {
+      // console.log(player1.getIcon());
+      // console.log(player2.getIcon());
+      if (
+        (board[0][0] === "X" && board[0][1] === "X" && board[0][2] === "X") ||
+        (board[1][0] === "X" && board[1][1] === "X" && board[1][2] === "X") ||
+        (board[2][0] === "X" && board[2][1] === "X" && board[2][2] === "X") ||
+        (board[0][0] === "X" && board[1][0] === "X" && board[2][0] === "X") ||
+        (board[0][1] === "X" && board[1][1] === "X" && board[2][1] === "X") ||
+        (board[0][2] === "X" && board[1][2] === "X" && board[2][2] === "X") ||
+        (board[0][0] === "X" && board[1][1] === "X" && board[2][2] === "X") ||
+        (board[0][2] === "X" && board[1][1] === "X" && board[2][0] === "X")
+      ) {
+        console.log("ok");
+      }
+      if (
+        (board[0][0] === "O" && board[0][1] === "O" && board[0][2] === "O") ||
+        (board[1][0] === "O" && board[1][1] === "O" && board[1][2] === "O") ||
+        (board[2][0] === "O" && board[2][1] === "O" && board[2][2] === "O") ||
+        (board[0][0] === "O" && board[1][0] === "O" && board[2][0] === "O") ||
+        (board[0][1] === "O" && board[1][1] === "O" && board[2][1] === "O") ||
+        (board[0][2] === "O" && board[1][2] === "O" && board[2][2] === "O") ||
+        (board[0][0] === "O" && board[1][1] === "O" && board[2][2] === "O") ||
+        (board[0][2] === "O" && board[1][1] === "O" && board[2][0] === "O")
+      ) {
+        console.log("ok O");
+      }
+    };
+
     const setSign = (cell) => {
       if (cell.innerHTML === "") {
         let [row, col] = cell.id.split("-"); //id del pusante cliccato viene splittato
         let strToNum = [row, col].map((str) => parseInt(str)); // ora i valori da stringhe passano a numeri
         board[row][col] = currentPlayer.getIcon(); // assegno alla posizione nell'array il segno corrente
         cell.innerHTML = currentPlayer.getIcon(); // assegno all'html il segno corrente
-        console.log(board);
+        // console.log(board);
+        playerWin();
         changePlayers();
         renderBoardArray();
       }
