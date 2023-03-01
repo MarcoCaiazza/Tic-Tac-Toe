@@ -1,6 +1,8 @@
 // Definiamo il nostro modulo
+
 const game = (() => {
   // Funzione che rappresenta la nostra griglia da gioco
+
   let board = [
     ["", "", ""],
     ["", "", ""],
@@ -18,43 +20,43 @@ const game = (() => {
   // Funzione che controlla il flusso di gioco
 
   const displayController = () => {
+    let cellGrid = document.querySelectorAll(".cell-grid");
+
     // Funzione che renderà il contenuto dell'array
     //  del tabellone di gioco sulla pagina web
 
-    let cellGrid = document.querySelectorAll(".cell-grid");
-
     const renderBoardArray = () => {
-      board.forEach((row) => {
-        row.forEach((cell) => {
-          cellGrid.innerHTML = cell;
+      board.forEach((row, i) => {
+        row.forEach((cell, j) => {
+          cellGrid[i * 3 + j] = cell;
         });
       });
     };
 
     // Funzione che alterna il segno "X" e il segno "O"
-    const changePlayers = (currentPlayer) => {
-      if (currentPlayer === players[0]) {
+    const changePlayers = () => {
+      if (!previousPlayer && currentPlayer === players[0]) {
         currentPlayer = players[1];
       } else {
-        return (currentPlayer = players[0]);
+        currentPlayer = players[0];
       }
     };
     // funzione che imposta uno dei due segni
-    const setSign = (e, cell, currentPlayer) => {
+    const setSign = (cell) => {
       if (cell.innerHTML === "") {
         let [row, col] = cell.id.split("-"); //id del pusante cliccato viene splittato
         let strToNum = [row, col].map((str) => parseInt(str)); // ora i valori da stringhe passano a numeri
         board[row][col] = currentPlayer.getIcon(); // assegno alla posizione nell'array il segno corrente
         cell.innerHTML = currentPlayer.getIcon(); // assegno all'html il segno corrente
         console.log(board);
-        changePlayers(currentPlayer);
+        changePlayers();
+        renderBoardArray();
       }
     };
     // Funzione che aggiunge il clik ad ogni cella
     const addClickEventToTableCells = () => {
-      let currentPlayer = players[0];
       cellGrid.forEach((cell) => {
-        cell.addEventListener("click", (e) => setSign(e, cell, currentPlayer));
+        cell.addEventListener("click", () => setSign(cell));
       });
     };
 
@@ -75,6 +77,10 @@ const controller = game.displayController();
 controller.renderBoardArray();
 
 // ad ogni giocatore aggiungiamo il clik per il segno
+
 players.forEach((player) => {
-  controller.addClickEventToTableCells(player);
+  controller.addClickEventToTableCells();
 });
+
+let currentPlayer = players[0]; // primo giocatore
+let previousPlayer = null; // giocatore precedente
