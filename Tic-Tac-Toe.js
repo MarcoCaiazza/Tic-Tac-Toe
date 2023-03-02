@@ -70,9 +70,13 @@ const game = (() => {
         console.log("ok O");
         gameover = true; // disabilita i pulsanti
       }
+      if (tie == 9) {
+        console.log("pareggio!");
+      }
     };
 
     let gameover = false;
+    let tie = 0;
     // funzione che imposta uno dei due segni
     const setSign = (cell) => {
       if (!gameover && cell.innerHTML === "") {
@@ -80,6 +84,8 @@ const game = (() => {
         let strToNum = [row, col].map((str) => parseInt(str)); // ora i valori da stringhe passano a numeri
         board[row][col] = currentPlayer.getIcon(); // assegno alla posizione nell'array il segno corrente
         cell.innerHTML = currentPlayer.getIcon(); // assegno all'html il segno corrente
+        tie++;
+        console.log(tie);
         // console.log(board);
         renderBoardArray();
         playerWin();
