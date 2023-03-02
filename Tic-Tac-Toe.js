@@ -100,7 +100,7 @@ const game = (() => {
     };
 
     //funzione che riavvia il gioco
-    const restartGame = () => {
+    const playAgain = () => {
       for (let i = 0; i < board.length; i++) {
         for (let j = 0; j < board[i].length; j++) {
           if (board[i][j] !== "") {
@@ -113,9 +113,12 @@ const game = (() => {
         cell.innerHTML = "";
       });
       endGame = false;
+      if (currentPlayer === players[1]) {
+        currentPlayer = players[0];
+      }
     };
 
-    restart.addEventListener("click", restartGame);
+    restart.addEventListener("click", playAgain);
 
     return { renderBoardArray, addClickEventToTableCells };
   };
