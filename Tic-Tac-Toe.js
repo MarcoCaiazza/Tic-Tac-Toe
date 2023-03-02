@@ -8,6 +8,8 @@ const game = (() => {
     ["", "", ""],
     ["", "", ""],
   ];
+  let tie = 0;
+  let endGame = false;
 
   // Funzione fabbrica che crea oggetti persona
 
@@ -21,6 +23,7 @@ const game = (() => {
 
   const displayController = () => {
     let cellGrid = document.querySelectorAll(".cell-grid");
+    let restart = document.getElementById("restart");
 
     // Funzione che renderà il contenuto dell'array
     //  del tabellone di gioco sulla pagina web
@@ -55,7 +58,7 @@ const game = (() => {
         (board[0][2] === "X" && board[1][1] === "X" && board[2][0] === "X")
       ) {
         console.log("ok");
-        gameover = true; // disabilita i pulsanti
+        endGame = true; // disabilita i pulsanti
       }
       if (
         (board[0][0] === "O" && board[0][1] === "O" && board[0][2] === "O") ||
@@ -68,25 +71,22 @@ const game = (() => {
         (board[0][2] === "O" && board[1][1] === "O" && board[2][0] === "O")
       ) {
         console.log("ok O");
-        gameover = true; // disabilita i pulsanti
+        endGame = true; // disabilita i pulsanti
       }
       if (tie == 9) {
         console.log("pareggio!");
       }
     };
 
-    let gameover = false;
-    let tie = 0;
     // funzione che imposta uno dei due segni
     const setSign = (cell) => {
-      if (!gameover && cell.innerHTML === "") {
+      if (!endGame && cell.innerHTML === "") {
         let [row, col] = cell.id.split("-"); //id del pusante cliccato viene splittato
         let strToNum = [row, col].map((str) => parseInt(str)); // ora i valori da stringhe passano a numeri
         board[row][col] = currentPlayer.getIcon(); // assegno alla posizione nell'array il segno corrente
         cell.innerHTML = currentPlayer.getIcon(); // assegno all'html il segno corrente
         tie++;
-        console.log(tie);
-        // console.log(board);
+        console.log(board);
         renderBoardArray();
         playerWin();
         changePlayers();
@@ -98,6 +98,24 @@ const game = (() => {
         cell.addEventListener("click", () => setSign(cell));
       });
     };
+
+    //funzione che riavvia il gioco
+    const restartGame = () => {
+      for (let i = 0; i < board.length; i++) {
+        for (let j = 0; j < board[i].length; j++) {
+          if (board[i][j] !== "") {
+            board[i][j] = "";
+            console.log(board);
+          }
+        }
+      }
+      cellGrid.forEach((cell) => {
+        cell.innerHTML = "";
+      });
+      endGame = false;
+    };
+
+    restart.addEventListener("click", restartGame);
 
     return { renderBoardArray, addClickEventToTableCells };
   };

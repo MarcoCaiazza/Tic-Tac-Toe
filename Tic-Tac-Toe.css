@@ -1,12 +1,45 @@
+body {
+    background-color: rgb(236, 236, 236);
+}
+*{
+    font-family: 'Courier New', Courier, monospace;
+}
+
 .containerTitle {
     display: flex;
     justify-content: center;
-    font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+    /* background-color: yellow; */
+}
+h1 {
+    font-weight: bolder;
+    font-size: 70px;
+    color: rgb(102, 12, 230);
+    text-shadow:  3px 4px rgb(220, 0, 212);
+}
+.containerButton {
+    margin-top: 20px;
+    display: flex;
+    justify-content: center;
+    gap: 100px;
+    /* background-color: red; */
+}
+button {
+    height: 45px;
+    width: 130px;
+    border-radius: 10px;
+    font-size: 20px;
+}
+#btnPlayer{
+    background-color: rgb(102, 12, 230);
+}
+#btnBot {
+   background-color:rgb(220, 0, 212)
 }
 .containerGrid {
     margin-top: 100px;
     display: flex;
     justify-content: center;
+    /* background-color: aqua; */
 }
 .grid {
     display: grid;
@@ -16,10 +49,19 @@
 }
 .grid > div {
     display: grid;
-    background-color: rgb(144, 111, 55);
+    background-color:rgb(102, 12, 230);
     border-radius: 5px;
     padding: 10px;
     place-items: center;
     font-family:Arial, Helvetica, sans-serif;
     font-size: 80px
+}
+.containerRestart{
+    display: flex;
+    /* background-color: red; */
+    margin-top: 60px;
+    margin-left: 716px;
+}
+#restart {
+    background-color:rgb(220, 0, 212);
 }
