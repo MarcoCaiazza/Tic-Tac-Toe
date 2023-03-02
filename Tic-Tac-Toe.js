@@ -41,16 +41,9 @@ const game = (() => {
         currentPlayer = players[0];
       }
     };
-    // funzione che imposta uno dei due segni
 
-    // funzione vincita o pareggio
-    // if la board ha 3 celle in fila
-    //  orrizzontale o diagonale con lo stesso simbolo,vince il simbolo
+    //funzione che controlla il vincitore
     const playerWin = () => {
-      // console.log(board.length);
-      // for (let i = 0; i < board.length; i++) {
-      // console.log(player1.getIcon());
-      // console.log(player2.getIcon());
       if (
         (board[0][0] === "X" && board[0][1] === "X" && board[0][2] === "X") ||
         (board[1][0] === "X" && board[1][1] === "X" && board[1][2] === "X") ||
@@ -62,6 +55,7 @@ const game = (() => {
         (board[0][2] === "X" && board[1][1] === "X" && board[2][0] === "X")
       ) {
         console.log("ok");
+        gameover = true; // disabilita i pulsanti
       }
       if (
         (board[0][0] === "O" && board[0][1] === "O" && board[0][2] === "O") ||
@@ -74,19 +68,22 @@ const game = (() => {
         (board[0][2] === "O" && board[1][1] === "O" && board[2][0] === "O")
       ) {
         console.log("ok O");
+        gameover = true; // disabilita i pulsanti
       }
     };
 
+    let gameover = false;
+    // funzione che imposta uno dei due segni
     const setSign = (cell) => {
-      if (cell.innerHTML === "") {
+      if (!gameover && cell.innerHTML === "") {
         let [row, col] = cell.id.split("-"); //id del pusante cliccato viene splittato
         let strToNum = [row, col].map((str) => parseInt(str)); // ora i valori da stringhe passano a numeri
         board[row][col] = currentPlayer.getIcon(); // assegno alla posizione nell'array il segno corrente
         cell.innerHTML = currentPlayer.getIcon(); // assegno all'html il segno corrente
         // console.log(board);
+        renderBoardArray();
         playerWin();
         changePlayers();
-        renderBoardArray();
       }
     };
     // Funzione che aggiunge il clik ad ogni cella
