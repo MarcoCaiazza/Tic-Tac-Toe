@@ -24,6 +24,22 @@ const game = (() => {
   const displayController = () => {
     let cellGrid = document.querySelectorAll(".cell-grid");
     let restart = document.getElementById("restart");
+    let playGame = document.querySelector("#playGame");
+    let containerGridAndRestart = document.querySelector(
+      ".containerGridAndRestart"
+    );
+
+    containerGridAndRestart.style.display = "none"; // griglia gioco nascosta
+
+    // funzione tasto che mostra la griglia da gioco
+    const showGame = () => {
+      if (containerGridAndRestart.style.display === "none") {
+        containerGridAndRestart.style.display = "flex";
+      }
+      playGame.style.display = "none";
+    };
+
+    playGame.addEventListener("click", showGame);
 
     // Funzione che renderà il contenuto dell'array
     //  del tabellone di gioco sulla pagina web
