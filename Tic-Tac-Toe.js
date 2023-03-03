@@ -28,6 +28,9 @@ const game = (() => {
     let containerGridAndRestart = document.querySelector(
       ".containerGridAndRestart"
     );
+    let winnerX = document.createElement("span");
+    winnerX.classList = "winnerX";
+    containerGridAndRestart.appendChild(winnerX);
 
     containerGridAndRestart.style.display = "none"; // griglia gioco nascosta
 
@@ -73,7 +76,7 @@ const game = (() => {
         (board[0][0] === "X" && board[1][1] === "X" && board[2][2] === "X") ||
         (board[0][2] === "X" && board[1][1] === "X" && board[2][0] === "X")
       ) {
-        console.log("ok");
+        winnerX.innerHTML = `${currentPlayer.getIcon()} Wins the round!`;
         endGame = true; // disabilita i pulsanti
       }
       if (
@@ -86,11 +89,11 @@ const game = (() => {
         (board[0][0] === "O" && board[1][1] === "O" && board[2][2] === "O") ||
         (board[0][2] === "O" && board[1][1] === "O" && board[2][0] === "O")
       ) {
-        console.log("ok O");
-        endGame = true; // disabilita i pulsanti
+        winnerX.innerHTML = `${currentPlayer.getIcon()} Wins the round!`;
+        endGame = true;
       }
       if (tie == 9) {
-        console.log("pareggio!");
+        winnerX.innerHTML = "Oops! It's a tie!";
       }
     };
 
@@ -114,9 +117,20 @@ const game = (() => {
         cell.addEventListener("click", () => setSign(cell));
       });
     };
-
-    //funzione che riavvia il gioco
-    const playAgain = () => {
+    //ripristina le celle html vuote
+    const restoreEmptyItemsHtml = () => {
+      cellGrid.forEach((cell) => {
+        cell.innerHTML = "";
+      });
+    };
+    // posiziona il primo giocatore al riavvio
+    const restartTheFirstPlayer = () => {
+      if (currentPlayer === players[1]) {
+        currentPlayer = players[0];
+      }
+    };
+    //ripristina le celle dell'array vuote
+    const restoreEmptyItemsArray = (winnerX) => {
       for (let i = 0; i < board.length; i++) {
         for (let j = 0; j < board[i].length; j++) {
           if (board[i][j] !== "") {
@@ -125,16 +139,18 @@ const game = (() => {
           }
         }
       }
-      cellGrid.forEach((cell) => {
-        cell.innerHTML = "";
-      });
+      restoreEmptyItemsHtml();
+      restartTheFirstPlayer();
       endGame = false;
-      if (currentPlayer === players[1]) {
-        currentPlayer = players[0];
-      }
+    };
+    const removeSpan = () => {
+      winnerX.innerHTML = "";
+      tie = 0;
     };
 
-    restart.addEventListener("click", playAgain);
+    restart.addEventListener("click", removeSpan);
+
+    restart.addEventListener("click", restoreEmptyItemsArray);
 
     return { renderBoardArray, addClickEventToTableCells };
   };
@@ -144,8 +160,8 @@ const game = (() => {
 
 // Creiamo un array di oggetti giocatore
 
-const player1 = game.Players("MARCO", "X");
-const player2 = game.Players("DENISE", "O");
+const player1 = game.Players("Player 1", "X");
+const player2 = game.Players("Player 2", "O");
 const players = [player1, player2];
 
 // utilizziamo la funzione displayController per renderizzare il tabellone di gioco
