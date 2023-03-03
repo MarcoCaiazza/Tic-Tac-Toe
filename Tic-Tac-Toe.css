@@ -6,6 +6,8 @@
     flex-direction: column;
     justify-content: center;
     position: relative; 
+    margin-left: auto;
+    margin-right: auto;
 }
 .containerTitle {
     display: flex;
@@ -58,7 +60,9 @@ button {
 .containerRestart{
     display: flex;
     margin-top: 40px;
-    margin-left: 715px;
+    margin-left: auto;
+    margin-right: auto;
+    max-width: 100%;
 }
 #restart {
     background: linear-gradient(to right,  #eb0076 0%,#0700df  100%);
@@ -75,13 +79,30 @@ button {
     color:#f8f8f8;
 }
 .winnerX {
-    position: absolute;
-    top: 0;
-    left: 740px;
+    position: fixed;
+    top: 200px;
+    left: 50%;
+    transform: translateX(-50%);
     z-index: 1;
     font-weight: bold;
     font-size: 50px;
     background: linear-gradient(to right,  #eb0076 0%,#0700df);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
-} 
+}
+@media only screen and (max-width: 768px) {
+    .containerGridAndRestart {
+      width: 100%;
+    }
+    .grid > div {
+      width: 100px;
+      height: 100px;
+      font-size: 60px;
+    }
+    h1 {
+      font-size: 60px;
+    }
+    .winnerX {
+      font-size: 30px;
+    }
+  }
